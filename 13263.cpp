@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 
 typedef long long ll;
 
@@ -19,6 +20,10 @@ struct stack_cht {
         } else {
             while (true) {
                 auto &top = s.back();
+                if (top.p == p) {
+                    if (top.q < q) continue;
+                    else break;
+                }
                 ll intersection = div(q - top.q, top.p - p);
                 if (intersection <= top.x) {
                     s.pop_back();
@@ -47,23 +52,16 @@ int main(){
 
     int n;
     std::cin >> n;
-    ll a, b, c;
-    std::cin >> a >> b >> c;
-    std::vector<ll> x(n);
-    for (auto &i : x) std::cin >> i;
-    std::vector<ll> s(n);
-    s[0] = x[0];
-    for (int i = 1; i < n; i++) {
-        s[i] = s[i - 1] + x[i];
-    }
+    std::vector<ll> a(n), b(n);
+    for (auto &i : a) std::cin >> i;
+    for (auto &i : b) std::cin >> i;
     stack_cht cht;
-    ll ans;
-    cht.add(0, 0);
-    for (int i = 0; i < n; i++) {
-        ll x = -cht.query(s[i]);
-        ll dp = x + a * s[i] * s[i] + b * s[i] + c;
-        ans = dp;
-        cht.add(2 * a * s[i], -(a * s[i] * s[i] - b * s[i] + dp));
+    cht.add(b[0], 0);
+    ll ans = 0;
+    for (int i = 1; i < n; i++) {
+        ll x = cht.query(a[i]);
+        ans = x;
+        cht.add(b[i], x);
     }
     std::cout << ans;
     return 0;

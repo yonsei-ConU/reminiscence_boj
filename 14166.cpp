@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <queue>
-//#include "algorithms.cpp"
+#include "algorithms.cpp"
 
 typedef long long ll;
 
@@ -49,13 +49,13 @@ int main(){
         return 0;
     }
     std::sort(controllers.begin(), controllers.end(), comp1);
-    //ConU::print2D(controllers);
+    ConU::print2D(controllers);
     std::priority_queue<Partition, std::vector<Partition>, comp2> q;
     q.push({0, 1, ans + get_key(controllers[0])});
     int k = 2;
     while (!q.empty()) {
         Partition cur = q.top(); q.pop();
-        //std::cout << cur.unfixed << ' ' << cur.idx << ' ' << cur.cost << std::endl;
+        std::cout << cur.unfixed << ' ' << cur.idx << ' ' << cur.cost << std::endl;
         ans += cur.cost;
         if (k == K) {
             std::cout << ans;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <set>
 
 typedef long long ll;
@@ -33,25 +34,23 @@ struct LineContainer : std::multiset<Line, std::less<>> {
     }
 };
 
-int main() {
+int main(){
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    LineContainer lc;
-    int Q;
-    std::cin >> Q;
-    while (Q--) {
-        int q;
-        std::cin >> q;
-        if (q == 1) {
-            ll a, b;
-            std::cin >> a >> b;
-            lc.add(a, b);
-        } else {
-            ll x;
-            std::cin >> x;
-            std::cout << lc.query(x) << '\n';
-        }
+    int n;
+    std::cin >> n;
+    std::vector<ll> a(n), b(n);
+    for (auto &i : a) std::cin >> i;
+    for (auto &i : b) std::cin >> i;
+    LineContainer cht;
+    cht.add(-b[0], 0);
+    ll ans = 0;
+    for (int i = 1; i < n; i++) {
+        ll x = -cht.query(a[i]);
+        ans = x;
+        cht.add(-b[i], -x);
     }
+    std::cout << ans;
     return 0;
 }
